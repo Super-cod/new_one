@@ -91,22 +91,24 @@ class LLMService:
     async def generate_consensus_recommendation(self, analysis_data: Dict[str, Any]) -> str:
         """Generate a recommendation using Claude Sonnet 4 (primary) or Gemini (fallback)"""
         prompt = f"""
-        As a synthetic biology expert, provide recommendations for genetic engineering based on the following analysis:
-        
+        You are a synthetic biology expert. Based on the following genetic analysis, provide a detailed and explanatory response:
+
         Gene: {analysis_data.get('gene_name', 'Unknown')}
         Species: {analysis_data.get('species', 'Unknown')}
         Sequence Length: {analysis_data.get('sequence_length', 0)}
         Off-target Sites: {analysis_data.get('off_target_sites', 0)}
         Protein Structure Confidence: {analysis_data.get('confidence_score', 0)}
-        
-        Please provide:
-        1. A viability assessment
-        2. Potential risks and mitigation strategies
-        3. Recommended next steps
-        4. Alternative approaches if any concerns are identified
-        
-        Be concise but comprehensive in your analysis.
+
+        In your response, please address the following points in a clear and thorough way, using full explanations rather than short bullet points:
+
+        1. Assess the overall viability of performing genetic engineering on this gene in the given species.
+        2. Discuss potential risks that may arise from this modification, and explain strategies that could be used to mitigate those risks.
+        3. Recommend logical next steps for experimental design or validation, explaining why each step is important.
+        4. If there are concerns with this approach, describe alternative strategies or methods that could be more effective or safer.
+
+        Ensure the response flows like an expert’s written assessment rather than a list of items.
         """
+
         
         # Try Claude Sonnet 4 first (enabled for all clients)
         if self.claude_enabled:

@@ -14,7 +14,7 @@ export function OffTargetAnalysis({ analysis, className }: OffTargetAnalysisProp
     return { level: 'High', color: 'text-red-600', bgColor: 'bg-red-50' };
   };
 
-  const risk = getRiskLevel(analysis.sites_found);
+  const risk = getRiskLevel(analysis.total_sites);
 
   return (
     <Card className={`${className} bg-transparent border-none shadow-none`}>
@@ -38,26 +38,44 @@ export function OffTargetAnalysis({ analysis, className }: OffTargetAnalysisProp
           </div>
           <div className="text-right">
             <div className={`text-2xl font-bold ${risk.color}`}>
-              {analysis.sites_found}
+              {analysis.total_sites}
             </div>
             <div className="text-xs text-muted-foreground">sites found</div>
           </div>
         </div>
 
+        {/* High Risk Sites */}
+        {analysis.high_risk_sites > 0 && (
+          <div className="flex items-center justify-between p-3 bg-red-50 rounded-lg border border-red-200">
+            <div>
+              <h4 className="text-sm font-medium text-red-800">High Risk Sites</h4>
+              <p className="text-xs text-red-600">
+                Sites with significant off-target potential
+              </p>
+            </div>
+            <div className="text-right">
+              <div className="text-2xl font-bold text-red-600">
+                {analysis.high_risk_sites}
+              </div>
+              <div className="text-xs text-red-600">high risk</div>
+            </div>
+          </div>
+        )}
+
         {/* Risk Assessment */}
         <div>
           <h4 className="text-sm font-medium mb-2">Risk Assessment</h4>
-          {analysis.sites_found === 0 ? (
+          {analysis.total_sites === 0 ? (
             <Alert>
               <AlertDescription>
                 ✅ No significant off-target sites detected. This genetic modification appears to have high specificity.
               </AlertDescription>
             </Alert>
           ) : (
-            <Alert variant={analysis.sites_found > 3 ? 'destructive' : 'default'}>
+            <Alert variant={analysis.total_sites > 3 ? 'destructive' : 'default'}>
               <AlertDescription>
-                {analysis.sites_found <= 3 ? '⚠️' : '❌'} {analysis.sites_found} potential off-target site{analysis.sites_found > 1 ? 's' : ''} detected. 
-                {analysis.sites_found > 3 
+                {analysis.total_sites <= 3 ? '⚠️' : '❌'} {analysis.total_sites} potential off-target site{analysis.total_sites > 1 ? 's' : ''} detected. 
+                {analysis.total_sites > 3 
                   ? ' High risk of unintended modifications - additional validation recommended.'
                   : ' Moderate risk - consider additional specificity controls.'
                 }
@@ -86,14 +104,14 @@ export function OffTargetAnalysis({ analysis, className }: OffTargetAnalysisProp
         <div className="p-3 border rounded-lg">
           <h4 className="text-sm font-medium mb-2">Safety Recommendations</h4>
           <ul className="text-sm space-y-1 text-muted-foreground">
-            {analysis.sites_found > 0 && (
+            {analysis.total_sites > 0 && (
               <>
                 <li>• Perform experimental validation with guide RNA specificity assays</li>
                 <li>• Consider using high-fidelity editing enzymes</li>
                 <li>• Implement additional screening methods for off-target detection</li>
               </>
             )}
-            {analysis.sites_found === 0 && (
+            {analysis.total_sites === 0 && (
               <>
                 <li>• Proceed with standard safety protocols</li>
                 <li>• Monitor for unexpected phenotypes during implementation</li>

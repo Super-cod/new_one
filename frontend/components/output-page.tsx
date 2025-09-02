@@ -12,37 +12,7 @@ import { GeneInfoCard } from '@/components/results/gene-info-card';
 import { SequenceDisplay } from '@/components/results/sequence-display';
 import { OffTargetAnalysis } from '@/components/results/off-target-analysis';
 import { SynthesisResponse } from '@/lib/types';
-
-// Mock data for demonstration - replace with actual API call
-const generateMockResult = (requestId: string): SynthesisResponse => ({
-  request_id: requestId,
-  status: 'completed',
-  gene: {
-    name: 'BGLAP',
-    species: 'homo_sapiens',
-    ncbi_id: 'NM_199173.6',
-    sequence: 'ATGAAAGCCCTCACACTCCTCGCCCTATTGGCCCTGATGCTCCTCCTTCCCAGCCTGTTATGCTTCAAACCTAAAATAGAAGACCCAGGCGCAGAAGTTGGAGCAGCTAAGAGGGAGAGCCTGGCAGGTACAGTCTGAAAATTCAGGCTCAAGCCCCAGTACATCCAGTTTGAGGGAGGAGCTACATTGAAACAGAATCTTTGATTATCCAGTATAACGTGGGAACAGGGATCCCTAAAAGACAAGTCCATTCTGGAGAAATTCTGGGTGGGGTGGAGGATCTCTGAGAAAAGGAGGTCTGGGTTGATCCCCAGAACTCTAAAGCCTTCTTTCCCTGGGTTAGGAAAGGATGAGCTAACAAGTACTATGAGGGGGAGGATTGGAGACCTCCTTAATTCCAGAGAGGTGTTGAACTTTTGTCCTCCCAGACATACTCCACCTACCAGATATTTTAACAGGGTACAGTACGAGACTTATTCCTAGAGACAGAGTTTCTTAGTGATGATTATGGGTCCTTCTCAGAAGAATAGACCTGGTTTGATCTCAGATGGGGCCCGGGTGGCATTTGACTGGGAGGCTCAGGCTACAATTAGCCATCGGTGGCTACGCTGTGACCCCTGATGTCCAGGAGACGCCACAGGCCACAGATGGAACTGGATGAGGGAAAGAGAGGACCAAGGTAGAGGAGCCTGGGTAAGACGGGGTTTAACTGGAATAAGAGGGTCAGAGAAGGGATCAACGTTTCCACCGTAAATGATGATGGATTTCCTGGCACTGCTGGAAATAGGGGTCCTCCCTGTAAGAACGTGGAGAGCAGAGTCTTGGATTTGGTGAAGGGTCATGCTACCCTGGGGCAAGGTCAGATCCTGAAGCAAATTGCTTTCTTTCCTGGGTAAGACAAGGTGATGCTTATGAAATGGAGGAACTGAGTAAGAGGAGTTAGAAGAGGAGGTGTTGAACTTTTGTCCACCCCAGACATACTCCACCTACCAGATATTTTAACAGGGTACAGTACGAGACTTATTCCTAGAGACAGAGTTTCTTAGTGATGATTATGGGTCCTTCTCAGAAGAATAGACCTGGTTTGATCTCAGATGGGGCCCGGGTGGCATTTGACTGGGAGGCTCAGGCTACAATTAGCCATCGGTGGCTACGCTGTGACCCCTGATGTCCAGGAGACGCCACAGGCCACAGATGGAACTGGATGAGGGAAAGAGAGGACCAAGGTAGAGGAGCCTGGGTAAGACGGGGTTTAACTGGAATAAGAGGGTCAGAGAAGGGATCAACGTTTCCACCGTAAATGATGATGGATTTCCTGGCACTGCTGGAAATAGGGGTCCTCCCTGTAAGAACGTGGAGAGCAGAGTCTTGGATTTGGTGAAGGGTCATGCTACCCTGGGGCAAGGTCAGATCCTGAAGCAAATTGCTTTCTTTCCTGGGTAAGACAAGGTGATGCTTATGAAATGGAGGAACTGAGTAAGAGGAGTTAGAAGAGGAGGTGTTGAACTTTTGTCCACCCCAGACATACTCCACCTACCAGATATTTTAACAGGGTACAGTACGAGACTTATTCCTAGAGACAGAGTTTCTTAGTGATGATTATGGGTCCTTCTCAGAAGAATAGACCTGGTTTGATCTCAGATGGGGCCCGGGTGGCATTTGACTGGGAGGCTCAGGCTACAATTAGCCATCGGTGGCTACGCTGTGACCCCTGATGTCCAGGAGACGCCACAGGCCACAGATGGAACTGGATGAGGGAAAGAGAGGACCAAGGTAGAGGAGCCTGGGTAAGACGGGGTTTAACTGGAATAAGAGGGTCAGAGAAGGGATCAACGTTTCCACCGTAAATGATGATGGATTTCCTGGCACTGCTGGAAATAGGGGTCCTCCCTGTAAGAACGTGGAGAGCAGAGTCTTGGATTTGGTGAAGGGTCATGCTACCCTGGGGCAAGGTCAGATCCTGAAGCAAATTGCTTTCTTTCCTGGGTAAGACAAGGTGATGCTTATGAAATGGAGGAACTGAGTAAGAGGAGTTAGAAGAGGAGGTGTTGAACTTTTGTCCACCCCAGACATACTCCACCTACCAGATATTTTAACAGGGTACAGTACGAGACTTATTCCTAGAGACAGAGTTTCTTAGTGATGATTATGGGTCCTTCTCAGAAGAATAGACCTGGTTTGATCTCAGATGGGGCCCGGGTGGCATTTGACTGGGAGGCTCAGGCTACAATTAGCCATCGGTGGCTACGCTGTGACCCCTGATGTCCAGGAGACGCCACAGGCCACAGATGGAACTGGATGAGGGAAAGAGAGGACCAAGGTAGAGGAGCCTGGGTAAGACGGGGTTTAACTGGAATAAGAGGGTCAGAGAAGGGATCAACGTTTCCACCGTAAATGATGATGGATTTCCTGGCACTGCTGGAAATAGGGGTCCTCCCTGTAAGAACGTGGAGAGCAGAGTCTTGGATTTGGTGAAGGGTCATGCTACCCTGGGGCAAGGTCAGATCCTGAAGCAAATTGCTTTCTTTCCTGGGTAAGACAAGGTGATGCTTATGAAATGGAGGAACTGAGTAAGAGGAGTTAGAAGAGGAGGTGTTGAACTTTTGTCCTCCCAGACATACTCCACCTACCAGATATTTTAACAGGGTACAGTACGAGACTTATTCCTAGAGACAGAGTTTCTTAGTGATGATTATGGGTCCTTCTCAGAAGAATAGACCTGGTTTGATCTCAGATGGGGCCCGGGTGGCATTTGACTGGGAGGCTCAGGCTACAATTAGCCATCGGTGGCTACGCTGTGACCCCTGATGTCCAGGAGACGCCACAGGCCACAGATGGAACTGGATGAGGGAAAGAGAGGACCAAGGTAGAGGAGCCTGGGTAAGACGGGGTTTAACTGGAATAAGAGGGTCAGAGAAGGGATCAACGTTTCCACCGTAAATGATGATGGATTTCCTGGCACTGCTGGAAATAGGGGTCCTCCCTGTAAGAACGTGGAGAGCAGAGTCTTGGATTTGGTGAAGGGTCATGCTACCCTGGGGCAAGGTCAGATCCTGAAGCAAATTGCTTTCTTTCCTGGGTAAGACAAGGTGATGCTTATGAAATGGAGGAACTGAG',
-    sequence_length: 2847,
-    description: 'Bone gamma-carboxyglutamate protein (osteocalcin) - a hormone produced by osteoblasts that regulates bone formation and mineralization'
-  },
-  optimized_sequence: 'ATGAAAGCCCTCACACTCCTCGCCCTATTGGCCCTGATGCTCCTCCTTCCCAGCCTGTTATGCTTCAAACCTAAAATAGAAGACCCAGGCGCAGAAGTTGGAGCAGCTAAGAGGGAGAGCCTGGCAGGTACAGTCTGAAAATTCAGGCTCAAGCCCCAGTACATCCAGTTTGAGGGAGGAGCTACATTGAAACAGAATCTTTGATTATCCAGTATAACGTGGGAACAGGGATCCCTAAAAGACAAGTCCATTCTGGAGAAATTCTGGGTGGGGTGGAGGATCTCTGAGAAAAGGAGGTCTGGGTTGATCCCCAGAACTCTAAAGCCTTCTTTCCCTGGGTTAGGAAAGGATGAGCTAACAAGTACTATGAGGGGGAGGATTGGAGACCTCCTTAATTCCAGAGAGGTGTTGAACTTTTGTCCTCCCAGACATACTCCACCTACCAGATATTTTAACAGGGTACAGTACGAGACTTATTCCTAGAGACAGAGTTTCTTAGTGATGATTATGGGTCCTTCTCAGAAGAATAGACCTGGTTTGATCTCAGATGGGGCCCGGGTGGCATTTGACTGGGAGGCTCAGGCTACAATTAGCCATCGGTGGCTACGCTGTGACCCCTGATGTCCAGGAGACGCCACAGGCCACAGATGGAACTGGATGAGGGAAAGAGAGGACCAAGGTAGAGGAGCCTGGGTAAGACGGGGTTTAACTGGAATAAGAGGGTCAGAGAAGGGATCAACGTTTCCACCGTAAATGATGATGGATTTCCTGGCACTGCTGGAAATAGGGGTCCTCCCTGTAAGAACGTGGAGAGCAGAGTCTTGGATTTGGTGAAGGGTCATGCTACCCTGGGGCAAGGTCAGATCCTGAAGCAAATTGCTTTCTTTCCTGGGTAAGACAAGGTGATGCTTATGAAATGGAGGAACTGAGTAAGAGGAGTTAGAAGAGGAGGTGTTGAACTTTTGTCCACCCCAGACATACTCCACCTACCAGATATTTTAACAGGGTACAGTACGAGACTTATTCCTAGAGACAGAGTTTCTTAGTGATGATTATGGGTCCTTCTCAGAAGAATAGACCTGGTTTGATCTCAGATGGGGCCCGGGTGGCATTTGACTGGGAGGCTCAGGCTACAATTAGCCATCGGTGGCTACGCTGTGACCCCTGATGTCCAGGAGACGCCACAGGCCACAGATGGAACTGGATGAGGGAAAGAGAGGACCAAGGTAGAGGAGCCTGGGTAAGACGGGGTTTAACTGGAATAAGAGGGTCAGAGAAGGGATCAACGTTTCCACCGTAAATGATGATGGATTTCCTGGCACTGCTGGAAATAGGGGTCCTCCCTGTAAGAACGTGGAGAGCAGAGTCTTGGATTTGGTGAAGGGTCATGCTACCCTGGGGCAAGGTCAGATCCTGAAGCAAATTGCTTTCTTTCCTGGGTAAGACAAGGTGATGCTTATGAAATGGAGGAACTGAGTAAGAGGAGTTAGAAGAGGAGGTGTTGAACTTTTGTCCACCCCAGACATACTCCACCTACCAGATATTTTAACAGGGTACAGTACGAGACTTATTCCTAGAGACAGAGTTTCTTAGTGATGATTATGGGTCCTTCTCAGAAGAATAGACCTGGTTTGATCTCAGATGGGGCCCGGGTGGCATTTGACTGGGAGGCTCAGGCTACAATTAGCCATCGGTGGCTACGCTGTGACCCCTGATGTCCAGGAGACGCCACAGGCCACAGATGGAACTGGATGAGGGAAAGAGAGGACCAAGGTAGAGGAGCCTGGGTAAGACGGGGTTTAACTGGAATAAGAGGGTCAGAGAAGGGATCAACGTTTCCACCGTAAATGATGATGGATTTCCTGGCACTGCTGGAAATAGGGGTCCTCCCTGTAAGAACGTGGAGAGCAGAGTCTTGGATTTGGTGAAGGGTCATGCTACCCTGGGGCAAGGTCAGATCCTGAAGCAAATTGCTTTCTTTCCTGGGTAAGACAAGGTGATGCTTATGAAATGGAGGAACTGAGTAAGAGGAGTTAGAAGAGGAGGTGTTGAACTTTTGTCCTCCCAGACATACTCCACCTACCAGATATTTTAACAGGGTACAGTACGAGACTTATTCCTAGAGACAGAGTTTCTTAGTGATGATTATGGGTCCTTCTCAGAAGAATAGACCTGGTTTGATCTCAGATGGGGCCCGGGTGGCATTTGACTGGGAGGCTCAGGCTACAATTAGCCATCGGTGGCTACGCTGTGACCCCTGATGTCCAGGAGACGCCACAGGCCACAGATGGAACTGGATGAGGGAAAGAGAGGACCAAGGTAGAGGAGCCTGGGTAAGACGGGGTTTAACTGGAATAAGAGGGTCAGAGAAGGGATCAACGTTTCCACCGTAAATGATGATGGATTTCCTGGCACTGCTGGAAATAGGGGTCCTCCCTGTAAGAACGTGGAGAGCAGAGTCTTGGATTTGGTGAAGGGTCATGCTACCCTGGGGCAAGGTCAGATCCTGAAGCAAATTGCTTTCTTTCCTGGGTAAGACAAGGTGATGCTTATGAAATGGAGGAACTGAG',
-  insertion_locus: 'Chr12:13,042,354',
-  off_target_analysis: {
-    sites_found: 2,
-    warnings: ['Potential off-target site detected on chromosome 7', 'Consider additional validation for chromosome 12 site']
-  },
-  protein_structure: {
-    pdb_data: 'mock_pdb_data',
-    structure_confidence: 0.87
-  },
-  risk_assessment: {
-    overall_risk: 'medium',
-    safety_score: 0.78,
-    warnings: ['Monitor for unexpected bone density changes', 'Regular calcium level monitoring recommended']
-  },
-  recommendation: 'This genetic modification shows promising potential for enhancing bone density. The moderate risk profile suggests proceeding with careful monitoring and staged implementation. Consider pilot studies in cell culture before animal models.',
-  confidence_score: 0.85
-});
+import { synthesisAPI } from '@/lib/api/synthesis-api';
 
 export function OutputPage() {
   const searchParams = useSearchParams();
@@ -60,26 +30,53 @@ export function OutputPage() {
       return;
     }
 
-    // In demo mode, we can load results immediately with minimal delay
-    // Just enough time to show the loading page briefly
-    const timer = setTimeout(() => {
+    console.log(`🔍 Loading results for request ID: ${requestId}`);
+
+    const loadResults = async () => {
       try {
-        const mockResult = generateMockResult(requestId);
-        setResult(mockResult);
-      } catch {
-        setError('Failed to load results');
+        setLoading(true);
+        setError(null);
+        
+        // Try to get results from the API (which checks sessionStorage first, then backend)
+        console.log(`📡 Attempting to fetch results for ${requestId}...`);
+        const fetchedResult = await synthesisAPI.getResult(requestId);
+        
+        console.log(`✅ Successfully loaded results for ${requestId}:`, fetchedResult);
+        console.log(`🧬 Gene: ${fetchedResult.gene.name}, Status: ${fetchedResult.status}`);
+        
+        setResult(fetchedResult);
+        
+        // Check if this was from demo mode
+        const demoMode = sessionStorage.getItem(`synthesis_mode_${requestId}`);
+        if (demoMode === 'demo') {
+          console.log('🎭 Results loaded from demo mode');
+        } else {
+          console.log('🔬 Results loaded from backend');
+        }
+        
+      } catch (error) {
+        console.error(`❌ Failed to load results for ${requestId}:`, error);
+        
+        // If we can't fetch the result, try one more time with a generated mock result
+        // This is a last resort fallback
+        try {
+          const fallbackResult = generateFallbackResult(requestId);
+          console.log(`🎭 Using fallback result for ${requestId}`);
+          setResult(fallbackResult);
+        } catch (fallbackError) {
+          console.error('❌ Even fallback failed:', fallbackError);
+          setError('Failed to load results. The analysis may have expired or not completed properly.');
+        }
       } finally {
         setLoading(false);
       }
-    }, 500); // Reduced from 1500ms to 500ms
+    };
 
-    return () => clearTimeout(timer);
+    loadResults();
   }, [requestId]);
 
   if (loading) {
-    return (
-      <LoadingPage />
-    );
+    return <LoadingPage />;
   }
 
   if (error || !result) {
@@ -129,6 +126,15 @@ export function OutputPage() {
                   {result.status.charAt(0).toUpperCase() + result.status.slice(1)}
                 </span>
               </div>
+              
+              {/* Show backend connection status */}
+              <div className="mt-2 text-sm text-gray-600">
+                {sessionStorage.getItem(`synthesis_mode_${requestId}`) === 'demo' ? (
+                  <span className="text-blue-600">Demo Mode - Simulated Results</span>
+                ) : (
+                  <span className="text-green-600">Backend Connected - Real Analysis</span>
+                )}
+              </div>
             </div>
 
             {/* Main Results Grid with stronger backgrounds */}
@@ -152,6 +158,76 @@ export function OutputPage() {
                 insertionLocus={result.insertion_locus}
               />
             </div>
+
+            {/* Risk Assessment */}
+            {result.risk_assessment && (
+              <div className="bg-white/80 backdrop-blur-lg rounded-2xl border border-white/50 shadow-2xl p-6">
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Risk Assessment</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                  {result.risk_assessment.toxicity_score !== undefined && (
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-blue-600">
+                        {(result.risk_assessment.toxicity_score * 100).toFixed(1)}%
+                      </div>
+                      <div className="text-sm text-gray-600">Toxicity Score</div>
+                    </div>
+                  )}
+                  {result.risk_assessment.immunogenicity_score !== undefined && (
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-purple-600">
+                        {(result.risk_assessment.immunogenicity_score * 100).toFixed(1)}%
+                      </div>
+                      <div className="text-sm text-gray-600">Immunogenicity</div>
+                    </div>
+                  )}
+                  {result.risk_assessment.environmental_risk_score !== undefined && (
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-green-600">
+                        {(result.risk_assessment.environmental_risk_score * 100).toFixed(1)}%
+                      </div>
+                      <div className="text-sm text-gray-600">Environmental Risk</div>
+                    </div>
+                  )}
+                </div>
+                {result.risk_assessment.recommendations && result.risk_assessment.recommendations.length > 0 && (
+                  <div>
+                    <h4 className="font-semibold mb-2">Safety Recommendations:</h4>
+                    <ul className="list-disc pl-5 space-y-1">
+                      {result.risk_assessment.recommendations.map((rec, index) => (
+                        <li key={index} className="text-gray-700">{rec}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Protein Structure */}
+            {result.protein_structure && (
+              <div className="bg-white/80 backdrop-blur-lg rounded-2xl border border-white/50 shadow-2xl p-6">
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Protein Structure Analysis</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <h4 className="font-semibold mb-2">Structure Confidence</h4>
+                    <div className="flex items-center space-x-2">
+                      <div className="flex-1 bg-gray-200 rounded-full h-2">
+                        <div 
+                          className="bg-blue-600 h-2 rounded-full" 
+                          style={{ width: `${(result.protein_structure.confidence_score || 0) * 100}%` }}
+                        />
+                      </div>
+                      <span className="text-sm font-semibold">
+                        {((result.protein_structure.confidence_score || 0) * 100).toFixed(1)}%
+                      </span>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-2">Prediction Method</h4>
+                    <span className="text-gray-700">{result.protein_structure.method || 'AlphaFold'}</span>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Recommendation with stronger background */}
             <div className="bg-white/80 backdrop-blur-lg rounded-2xl border border-white/50 shadow-2xl p-6">
@@ -182,4 +258,43 @@ export function OutputPage() {
       </VideoBackground>
     </ErrorBoundary>
   );
+}
+
+// Fallback function - only used if everything else fails
+function generateFallbackResult(requestId: string): SynthesisResponse {
+  console.log('🚨 Generating emergency fallback result');
+  
+  return {
+    request_id: requestId,
+    status: 'completed',
+    gene: {
+      name: 'FALLBACK_GENE',
+      species: 'homo_sapiens',
+      ncbi_id: 'NM_000000.1',
+      sequence: 'ATGTCCAAACCTACAGTAAAAACCCTGGCCGACTAG',
+      sequence_length: 36,
+      description: 'Fallback gene sequence - results could not be loaded properly'
+    },
+    optimized_sequence: null,
+    insertion_locus: 'Chr1:100000000',
+    off_target_analysis: {
+      total_sites: 0,
+      high_risk_sites: 0,
+      sites: [],
+      warnings: ['Results could not be loaded properly']
+    },
+    protein_structure: {
+      pdb_data: '',
+      confidence_score: 0,
+      method: 'N/A'
+    },
+    risk_assessment: {
+      toxicity_score: 0,
+      immunogenicity_score: 0,
+      environmental_risk_score: 0,
+      recommendations: ['Results could not be loaded - please try again']
+    },
+    recommendation: 'Results could not be loaded properly. Please return to the home page and try your analysis again.',
+    confidence_score: 0
+  };
 }

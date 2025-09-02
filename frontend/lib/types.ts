@@ -16,26 +16,30 @@ export interface GeneData {
 }
 
 export interface OffTargetAnalysis {
-  sites_found: number;
+  total_sites: number;
+  high_risk_sites: number;
+  sites: string[];
   warnings: string[];
 }
 
 export interface ProteinStructure {
   pdb_data: string;
-  structure_confidence: number;
+  confidence_score: number;
+  method: string;
 }
 
 export interface RiskAssessment {
-  overall_risk: 'low' | 'medium' | 'high';
-  safety_score: number;
-  warnings: string[];
+  toxicity_score: number;
+  immunogenicity_score: number;
+  environmental_risk_score: number;
+  recommendations: string[];
 }
 
 export interface SynthesisResponse {
   request_id: string;
   status: 'pending' | 'processing' | 'completed' | 'failed';
   gene: GeneData;
-  optimized_sequence: string;
+  optimized_sequence: string | null;
   insertion_locus: string;
   off_target_analysis: OffTargetAnalysis;
   protein_structure: ProteinStructure;
